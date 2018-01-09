@@ -1,0 +1,49 @@
+<div>
+  <!-- Navigation Bar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#!/">Hostelry Service</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li><a href="#!/">Home</a></li>
+          <li><a href="#">Hostelries</a></li>
+          <li><a href="#">Compare</a></li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#!signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+          <li><a href="#!login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        </ul>
+      </div>
+    </nav>
+<div class="row"  style="padding-top: 100px;">
+  <div class="col-md-4 col-md-offset-4">
+    <div class="panel panel-primary">
+      <div class="panel-heading" style="padding-left: 170px; font-size: 20px;">Register</div>
+      <div class="panel-body">
+          <form method="POST" ng-submit="register()">
+            <input class="form-control" ng-model="formData.firstname" id="firstname" type="text" placeholder="Firstname"><br>
+            <input class="form-control" ng-model="formData.middlename" id="middlename" type="text" placeholder="Middlename"><br>
+            <input class="form-control" ng-model="formData.lastname" id="lastname" type="text" placeholder="Lastname"><br>
+            <input class="form-control" ng-model="formData.age" id="age" type="text" placeholder="Age"><br>
+              <select class="form-control" id="sel1" ng-model="formData.gender">
+                <option></option>
+                <option>Male</option>
+                <option>female</option>
+              </select><br>
+            <input class="form-control" ng-model="formData.address" id="address" type="text" placeholder="Address"><br>
+            <input class="form-control" ng-model="formData.nationality" id="nationality" type="text" placeholder="Nationality"><br>
+            <input class="form-control" ng-model="formData.username" id="username" type="text" placeholder="username"><br>
+            <input class="form-control" ng-model="formData.password" id="user_password" type="Password" placeholder="Password"><br>
+            <input class="form-control" ng-model="formData.useremail" id="user_email" type="text" placeholder="Email"><br>
+            <button type="submit" id="submitbutton" type="submit" class="btn btn-primary btn-block">Submit</button><br>
+            <p class="alert alert-success" ng-show="userform" style="padding: 5px; font-size: 20px;"><strong>{{userform}}</strong></p>
+        </form>
+      </div>
+  </div>
+</div>
+
+
+</div>

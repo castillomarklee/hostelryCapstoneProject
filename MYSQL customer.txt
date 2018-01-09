@@ -1,0 +1,16 @@
+create table customer(
+	customer_id int NOT NULL,
+    firstname VARCHAR(255),
+    middlename VARCHAR(255),
+    lastname VARCHAR(255),
+    age int,
+    gender VARCHAR(255),
+    address VARCHAR(255),
+    nationality VARCHAR(255),
+    username VARCHAR(255),
+    customer_password VARCHAR(255),
+    user_email VARCHAR(255),
+    date_created VARCHAR(255),
+    PRIMARY KEY(customer_id)
+    
+);

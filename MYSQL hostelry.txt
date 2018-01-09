@@ -1,0 +1,9 @@
+create table hostelry(
+	hostelry_id int NOT NULL,
+    hostelry_name VARCHAR(255),
+    hostelry_type VARCHAR(255),
+    hostelry_description VARCHAR(255),
+    hostelry_username VARCHAR(255),
+    hostelry_password VARCHAR(255),
+    PRIMARY KEY(hostelry_id)
+);

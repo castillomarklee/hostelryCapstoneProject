@@ -1,0 +1,141 @@
+<div>
+      <!-- Navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Hostelry Admin</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a ng-click="hostelryhomelogout()" style="cursor: pointer;"><span class="glyphicon glyphicon-user"></span> Log out</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="panel panel-primary" style="width: 90%; margin-left: 65px; margin-top: 50px;">
+      <div class="panel-body">
+
+        <div class="col-sm-2" style="float: left; margin-left: 85px;">
+            <div class="panel panel-success" >
+              <div class="panel-heading" style="text-align: center;">Rooms</div>
+              <div class="panel-body">
+                <i class="fa fa-bed fa-5x" aria-hidden="true" style="padding-left: 30px;"></i>
+                <button class="btn btn-success btn-block" type="button" data-toggle="modal" data-target="#addrooms">Open</button>
+              </div>
+          </div>
+        </div>
+        <div class="col-sm-2" style="float: left;">
+            <div class="panel panel-success" >
+              <div class="panel-heading" style="text-align: center;">View Rooms</div>
+              <div class="panel-body">
+                <i class="fa fa-key fa-5x" aria-hidden="true" style="padding-left: 33px;"></i><br>
+                <button class="btn btn-success btn-block" data-toggle="modal" type="button" data-target="#viewrooms">Open</button>
+              </div>
+          </div>
+        </div>
+        <div class="col-sm-2" style="float: left;">
+            <div class="panel panel-success" >
+              <div class="panel-heading" style="text-align: center;">Confirm Reservation</div>
+              <div class="panel-body">
+                <i class="fa fa-credit-card fa-5x" aria-hidden="true" style="padding-left: 33px;"></i><br>
+                <button class="btn btn-success btn-block">Open</button>
+              </div>
+          </div>
+        </div>
+        <div class="col-sm-2" style="float: left;">
+            <div class="panel panel-success" >
+              <div class="panel-heading" style="text-align: center;">View Reservations</div>
+              <div class="panel-body">
+                <i class="fa fa-folder fa-5x" aria-hidden="true" style="padding-left: 33px;"></i><br>
+                <button class="btn btn-success btn-block">Open</button>
+              </div>
+          </div>
+        </div>
+        <div class="col-sm-2" style="float: left;">
+            <div class="panel panel-success" >
+              <div class="panel-heading" style="text-align: center;">Settings</div>
+              <div class="panel-body">
+                <i class="fa fa-cog fa-5x" aria-hidden="true" style="padding-left: 33px;"></i><br>
+                <button class="btn btn-success btn-block">Open</button>
+              </div>
+          </div>
+        </div>
+
+        <div id="addrooms" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Rooms</h4>
+              </div>
+              <div class="modal-body">
+                <form method="POST" ng-submit="hostelryuseraddroom()">
+                  <br>
+                  <input type="text" name="roomnumber" id="room_number" class="form-control" placeholder="Room Number" ng-model="hostelryuseraddroomform.roomnumber"><br>
+                  <input type="text" name="roomname" id="room_name" class="form-control" placeholder="Room Name" ng-model="hostelryuseraddroomform.roomname"><br>
+                  <input type="text" name="roomtype" id="room_type" class="form-control" placeholder="Room Type" ng-model="hostelryuseraddroomform.roomtype"><br>
+                  <input type="text" name="roomdescription" id="room_description" class="form-control" placeholder="Room Description" ng-model="hostelryuseraddroomform.roomdescription"><br>
+                  <input type="text" name="roomcapacity" id="capacity" class="form-control" placeholder="Room Capacity" ng-model="hostelryuseraddroomform.roomcapacity"><br>
+                  <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                  <p style="font-size: 20px;">{{hostelryuserformsuccess}}</p>>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div id="viewrooms" class="modal fade" role="dialog">
+          <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Rooms</h4>
+              </div>
+              <div class="modal-body">
+                  <table class="table table-striped"> 
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Number</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Capacity</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="i in hostelryusersroomtable">
+                        <td>{{i.room_id}}</td>
+                        <td>{{i.room_number}}</td>
+                        <td>{{i.room_name}}</td>
+                        <td>{{i.room_type}}</td>
+                        <td>{{i.room_description}}</td>
+                        <td>{{i.capacity}}</td>
+                        <td>{{i.room_status}}</td>
+                        <td><button type="button" class="btn btn-danger btn-block btn-xs" ng-click="hostelryusersdelete(i.room_id)">Delete</button></td>
+                        <td><button type="button" class="btn btn-primary btn-block btn-xs" ng-click="">Update</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+</div>
