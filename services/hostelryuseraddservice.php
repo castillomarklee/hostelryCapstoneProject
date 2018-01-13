@@ -12,6 +12,7 @@
 	$type = $hostelryuser->roomtype;
 	$description = $hostelryuser->roomdescription;
 	$capacity = $hostelryuser->roomcapacity;
+	$price = $hostelryuser->roomprice;
 
 	$data = array();
 
@@ -40,7 +41,7 @@
 
 		$status = 'available';
 
-		$query = mysqli_query($conn, "INSERT INTO rooms VALUES('$id', '$number', '$name', '$type', '$description', '$capacity','$status', '$hostelry_id')");
+		$query = mysqli_query($conn, "INSERT INTO rooms VALUES('$id', '$number', '$name', '$type', '$description', '$capacity','$status', '$price', '$hostelry_id')");
 
 		if($query) {
 			$querysuccess = false;

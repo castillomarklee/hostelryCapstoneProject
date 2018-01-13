@@ -3,6 +3,10 @@
     border-radius: 0;
 }
 
+.wallpaper {
+  background-color: #e7e7e7;
+}
+
 .error-input {
 	box-shadow: 0 0 5px red;
 }

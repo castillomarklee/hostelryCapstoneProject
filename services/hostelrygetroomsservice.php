@@ -8,7 +8,7 @@
 
 	$data= array();
 
-	$query = mysqli_query($conn, "SELECT room_id, room_number, room_name, room_type, capacity FROM rooms WHERE hostelry_id='$id' AND room_status='available'");
+	$query = mysqli_query($conn, "SELECT room_id, room_number, room_name, room_type, capacity, room_price FROM rooms WHERE hostelry_id='$id' AND room_status='available'");
 
 	while ($querytable = mysqli_fetch_assoc($query)) {
 		$data[] = $querytable;

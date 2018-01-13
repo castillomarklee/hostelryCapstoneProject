@@ -531,6 +531,95 @@ var application = angular.module('App', ['ui.router']);
 				});
 			}
 
+			$scope.hostelryuserstableshow = false;
+			$scope.hostelryuserupdateshow = true;
+			$scope.hostelryyusersupdateform = {};
+
+			$scope.tableupdatebutton = function(roomid) {
+				$scope.hostelryuserstableshow = true;
+				$scope.hostelryuserupdateshow = false;
+				$http({
+					method: 'POST',
+					url: './services/hostelryusersupdateroomsservice.php',
+					data: {'id': roomid}
+				}).then(function(response) {
+					$scope.hostelryyusersupdateform = response.data[0];
+					console.log($scope.hostelryyusersupdateform);
+				});
+			}
+
+			$scope.hostelryusersupdateroomsform = function() {
+				$http({
+					method: 'POST',
+					url: './services/updateroom.php',
+					data: $scope.hostelryyusersupdateform
+				}).then(function(response) {
+					location.reload();
+				});
+			}
+
+			$scope.closeupdate = function() {
+				$scope.hostelryuserstableshow = false;
+				$scope.hostelryuserupdateshow = true;
+				$scope.hostelryyusersupdateform = {};
+			}
+
+			$scope.viewreservationform = {};
+
+			$scope.viewreservationtable = function() {
+				$http({
+					method: 'GET',
+					url: './services/viewreservationservice.php'
+				}).then(function(response) {
+					$scope.viewreservationform = response.data;
+					console.log($scope.viewreservationform);
+				});
+			}
+
+			$scope.deletereservation = function(reservationid) {
+				$http({
+					method: 'POST',
+					url: './services/deletereservationservices.php',
+					data: {'id': reservationid}
+				}).then(function(response) {
+					location.reload();
+				});
+			}
+
+			$scope.reservationcode = {};
+			$scope.searchform = false;
+			$scope.codeform = true;
+
+			$scope.searchreservationcode = function() {
+				$http({
+					method: 'POST',
+					url: './services/searchreservationcodeservice.php',
+					data: $scope.reservationcode
+				}).then(function(response) {
+					$scope.reservationcode = response.data[0];
+					$scope.searchform = true;
+					$scope.codeform = false;
+				});
+			}
+
+			$scope.closesearchreservationcode = function() {
+				$scope.reservationcode = {};
+				$scope.searchform = false;
+				$scope.codeform = true;
+			}
+
+			$scope.confirmreservationcode = function() {
+				$http({
+					method: 'POST',
+					url: './services/confirmreservationcodeservice.php',
+					data: $scope.reservationcode
+				}).then(function(response) {
+					location.reload();
+				});
+			}
+
+
+
 	}]);
 
 	application.controller('userhostelrycontroller', ['$scope', '$http', '$location', function($scope, $http, $location) {
@@ -630,6 +719,17 @@ var application = angular.module('App', ['ui.router']);
 					data: {'hostelryroomsid': $scope.roomidreserve}
 				}).then(function(response) {
 					location.reload();
+				});
+			}
+
+			$scope.userviewreservedrooms = {};
+
+			$scope.viewreservedrooms = function() {
+				$http({
+					method: 'GET',
+					url: './services/viewreservedroomservice.php'
+				}).then(function(response) {
+					$scope.userviewreservedrooms = response.data;
 				});
 			}
 
