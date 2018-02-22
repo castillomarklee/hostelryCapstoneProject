@@ -14,12 +14,12 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#!/">Hostelry Service</a>
+          <a class="navbar-brand" href="#!customerHome">Hostelry Service</a>
         </div>
         <ul class="nav navbar-nav">
           <li><a href="#!customerHome">Home</a></li>
-          <li><a href="#!hostelry">Hostelries</a></li>
-          <li><a href="#!inquire">Compare</a></li>
+          <li><a href="#!userhostelry">Hostelries</a></li>
+          <li><a href="#!compare">Compare</a></li>
         </ul>
           <form class="navbar-form navbar-left">
       <div class="input-group">
@@ -39,14 +39,17 @@
       </div>
     </nav>
 
-    <div ng-repeat="i in hostelryviewlist" style="margin-left: 110px;">
+    <h1 style="color: white; padding-left: 130px; padding-top: 100px;">List of Hostelries in Isulan</h1>
 
-    	<div class="well well-lg" style="width: 40%; margin-left: 50px; margin-top: 40px; float: left;">
+    <ul uib-pagination total-items="hostelryviewlist.length" ng-model="currentPage" style="margin-left: 580px;" ng-change="pageSize"></ul><br>
+
+    <div ng-repeat="i in hostelryviewlist | startFrom:(currentPage - 1) * pageSize | limitTo:pageSize | filter:searchhostelry" style="margin-left: 110px; color: white;">
+
+    	<div class="well well-lg" style="background-color: rgba(0, 0, 0, 0.6); width: 40%; margin-left: 50px; margin-top: 40px; float: left;">
 
     		<h1 style="font-size: 20px; font-style: Arial; text-align: center;">{{i.hostelry_name}}</h1>
     		<p style="text-align: center;">{{i.hostelry_description}}</p>
-    		<button type="button" class="btn btn-primary btn-md" style="margin-left: 100px;">View</button>
-    		<button type="button" class="btn btn-success btn-md">Compare</button>
+    		<button type="button" class="btn btn-primary btn-md" style="margin-left: 150px;">View</button>
     		<button type="button" class="btn btn-danger btn-md" data-target="#reservemodal" data-toggle="modal" ng-click="hostelrygettableservice(i.hostelry_id, i.hostelry_name)">Reserve</button>
     	</div>
 
@@ -138,95 +141,42 @@
 
     </div>
   </div>
-    
-
-    <!-- Services -->
-    <section id="services">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12 text-center">
-            <h2 class="section-heading text-uppercase" style="padding-top: 100px;">Services</h2>
-            <h3 class="section-subheading text-muted">We care for travelers.</h3>
-          </div>
-        </div>
-        <div class="row text-center">
-          <div class="row" style="margin-left: 200px;">
-    <div class="col-md-3" style="float: left;">
-      <div class="panel panel-danger" >
-        <div class="panel-heading">Inquire</div>
-        <div class="panel-body">
-          <span class="fa-stack fa-4x">
-              <i class="fa fa-circle fa-stack-2x text-primary"></i>
-              <i class="fa fa-tags fa-stack-1x fa-inverse"></i>
-            </span><br>
-          <button class="btn btn-primary btn-block">Open</button>
-        </div>
-    </div>
-  </div>
-
-  <div class="row" >
-    <div class="col-md-3" style="float: left;">
-      <div class="panel panel-danger" >
-        <div class="panel-heading">View Hostelries</div>
-        <div class="panel-body">
-          <span class="fa-stack fa-4x">
-              <i class="fa fa-circle fa-stack-2x text-primary"></i>
-              <i class="fa fa-laptop fa-stack-1x fa-inverse"></i>
-            </span>
-          <button class="btn btn-primary btn-block" type="button" ng-click="hostelry()">Open</button>
-        </div>
-    </div>
-  </div>
-
-  <div class="row" >
-    <div class="col-md-3" style="float: left;">
-      <div class="panel panel-danger" >
-        <div class="panel-heading">Reserve</div>
-        <div class="panel-body">
-            <span class="fa-stack fa-4x">
-              <i class="fa fa-circle fa-stack-2x text-primary"></i>
-              <i class="fa fa-lock fa-stack-1x fa-inverse"></i>
-            </span>
-          <button class="btn btn-primary btn-block">Open</button>
-        </div>
-    </div>
-  </div>
-        </div>
-      </div>
-    </section>
 
     <!-- About -->
     <section id="about">
       <div class="container">
         <div class="row">
           <div class="col-lg-12 text-center">
-            <h2 class="section-heading text-uppercase">Hostelry Reservation Method</h2>
-            <div class="row text-center">
-          <div class="col-md-4">
-            <span class="fa-stack fa-4x">
-              <i class="fa fa-circle fa-stack-2x text-primary"></i>
-              <i class="fa fa-building fa-stack-1x fa-inverse"></i>
-            </span>
-            <h4 class="service-heading">Search, inquire and reserve.</h4>
-            <p class="text-muted">Search and inquire for your preffered hostelry and reserve. The webiste service is free of charge for users.</p>
-          </div>
-          <div class="col-md-4">
-            <span class="fa-stack fa-4x">
-              <i class="fa fa-circle fa-stack-2x text-primary"></i>
-              <i class="fa fa-map-o fa-stack-1x fa-inverse"></i>
-            </span>
-            <h4 class="service-heading">Print receipt</h4>
-            <p class="text-muted">After you reserve for your preffered hostelry, you must print the receipt for hostelry reservation confirmation</p>
-          </div>
-          <div class="col-md-4">
-            <span class="fa-stack fa-4x">
-              <i class="fa fa-circle fa-stack-2x text-primary"></i>
-              <i class="fa fa-check fa-stack-1x fa-inverse"></i>
-            </span>
-            <h4 class="service-heading">Confirm and pay</h4>
-            <p class="text-muted">After you arrive in your reserved hostelry, you must present the receipt. After the hostelry confirmed your reservation, you will pay directly to the counter.</p>
-          </div>
-        </div>
+            <div class="well" style="color: white; background-color: rgba(0, 0, 0, 0.6); margin-top: 50px;">
+                <h2 class="section-heading text-uppercase">Hostelry Reservation Method</h2>
+                    <div class="row text-center">
+                  <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                      <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                      <i class="fa fa-building fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">Search, inquire and reserve.</h4>
+                    <p>Search and inquire for your preffered hostelry and reserve. The webiste service is free of charge for users.</p>
+                  </div>
+                  <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                      <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                      <i class="fa fa-map-o fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">Print receipt</h4>
+                    <p>After you reserve for your preffered hostelry, you must print the receipt for hostelry reservation confirmation</p>
+                  </div>
+                  <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                      <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                      <i class="fa fa-check fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">Confirm and pay</h4>
+                    <p>After you arrive in your reserved hostelry, you must present the receipt. After the hostelry confirmed your reservation, you will pay directly to the counter.</p>
+                  </div>
+                </div>
+            </div>
+
           </div>
         </div>
       </div>

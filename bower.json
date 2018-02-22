@@ -29,7 +29,8 @@
     "angular": "1.6.4",
     "angular-ui-router": "^1.0.11",
     "Bootstrap-Confirmation": "bootstrap-confirmation#*",
-    "chart.js": "^2.7.1"
+    "chart.js": "^2.7.1",
+    "bootstrap-datepicker": "^1.7.1"
   },
   "resolutions": {
     "font-awesome": "^4.7.0",

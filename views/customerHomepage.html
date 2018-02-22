@@ -13,12 +13,12 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#!/">Hostelry Service</a>
+          <a class="navbar-brand" href="#!customerHome">Hostelry Service</a>
         </div>
         <ul class="nav navbar-nav">
           <li><a href="#!customerHome">Home</a></li>
           <li><a href="#!userhostelry">Hostelries</a></li>
-          <li><a href="#!inquire">Compare</a></li>
+          <li><a href="#!compare">Compare</a></li>
         </ul>
           <form class="navbar-form navbar-left">
       <div class="input-group">
@@ -31,6 +31,7 @@
       </div>
     </form>
         <ul class="nav navbar-nav navbar-right">
+          <li><a style="cursor: pointer;" data-target="#roomsreservedmodal" ng-click="viewreservedrooms()" data-toggle="modal"><i class="fa fa-key fa-1x" style="padding-left: 33px;" aria-hidden="true"></i> Rooms Reserved</a></li>
           <li><a href="#!signup"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
           <li><a style="cursor: pointer;" id="loguoutaccount" ng-click="logoutfunction()"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
         </ul>

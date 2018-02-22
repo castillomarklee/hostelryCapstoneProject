@@ -1,6 +1,6 @@
 'use strict';
 
-var application = angular.module('App', ['ui.router']);
+var application = angular.module('App', ['ui.router', 'ui.bootstrap']);
 
 	application.config(['$stateProvider', '$urlRouterProvider',
     function($stateProvider, $urlRouterProvider) {
@@ -82,20 +82,41 @@ var application = angular.module('App', ['ui.router']);
 	            url: '/userhostelry',
 	            templateUrl: './views/userhostelry.html',
 	            controller: 'userhostelrycontroller'
+	         })
+	         .state('adminreservations', {
+	            url: '/adminreservations',
+	            templateUrl: './views/adminreservation.html',
+	            controller: 'adminreservationscontroller'
+	         })
+	         .state('adminrooms', {
+	            url: '/adminrooms',
+	            templateUrl: './views/adminroomspage.html',
+	            controller: 'adminroomscontroller'
+	         })
+	         .state('compare', {
+	            url: '/compare',
+	            templateUrl: './views/compare.html',
+	            controller: 'comparecontroller'
 	         });
 
     }
 ]);
 
 	application.controller('registercontroller', ['$scope', '$http', function($scope, $http) {
+		$(document).ready(function() {
+				$(".loading").fadeOut("slow");
+			});
 				$scope.formData = {};
 				$scope.userform = "";
+
 	        	$scope.register = function() {
+	        		$(".loading").fadeIn("slow");
 	        		$http({
 	        			method: 'POST',
 	        			url: './services/loginsubmit.php',
 	        			data: $scope.formData
 	        		}).then(function(response) {
+	        			$(".loading").fadeOut("slow");
 	        			console.log(response);
 	        			if(response.data.empty == true) {
 	        				$scope.userform = "Please fill the form.";
@@ -187,6 +208,9 @@ var application = angular.module('App', ['ui.router']);
 	}]);
 
 	application.controller('admincontroller', ['$scope', '$http', '$location', function($scope, $http, $location) {
+		$(document).ready(function() {
+				$(".loading").fadeOut("slow");
+			});
 		$scope.loginData = {};
 		$scope.loginUser = "";
 		$scope.loginadmin = function() {
@@ -206,6 +230,9 @@ var application = angular.module('App', ['ui.router']);
 	}]);
 
 	application.controller('adminhomecontroller', ['$scope', '$http', '$location', function($scope, $http, $location) {
+		$(document).ready(function() {
+				$(".loading").fadeOut("slow");
+			});
 		$http({
 				method: 'GET',
 				url: './services/adminhome.php',
@@ -233,6 +260,9 @@ var application = angular.module('App', ['ui.router']);
 	}]);
 
 	application.controller('adminhostelrycontroller', ['$scope', '$http', '$location', function($scope, $http, $location) {
+			$(document).ready(function() {
+				$(".loading").fadeOut("slow");
+			});
 		$http({
 				method: 'GET',
 				url: './services/adminhome.php',
@@ -364,6 +394,9 @@ var application = angular.module('App', ['ui.router']);
 	}]);
 
 	application.controller('adminuserscontroller', ['$scope', '$http', '$location', function($scope, $http, $location) {
+		$(document).ready(function() {
+				$(".loading").fadeOut("slow");
+			});
 		$http({
 				method: 'GET',
 				url: './services/adminhome.php',
@@ -421,6 +454,7 @@ var application = angular.module('App', ['ui.router']);
 					method: 'GET',
 					url: './services/usersadmintableservice.php',
 				}).then(function(response) {
+
 					
 					for(var i=0; i < response.data.length; i++) {
 						$scope.usersadminaccount.push(response.data[i]);
@@ -437,6 +471,59 @@ var application = angular.module('App', ['ui.router']);
 				}).then(function(response) {
 					location.reload();
 				});
+			}
+
+			$scope.adminadduserform = {};
+			$scope.adminadduserformessage = "";
+			$scope.adminadduserformessageshow = true;
+			$scope.adminadduserformessagealert = "";
+
+			$scope.adminadduser = function() {
+				
+						$http({
+					method: 'POST',
+					url: './services/adminaddduserservices.php',
+					data: $scope.adminadduserform
+				}).then(function(response) {
+					
+					if(response.data.usernameexist == true) {
+						$scope.adminadduserformessage = "Username is already in use.";
+						$scope.adminadduserformessageshow = false;
+						$scope.adminadduserformessagealert = "alert-danger";
+					} else if(response.data.usernamelength == true) {
+						$scope.adminadduserformessage = "Username must be more than 5 characters";
+						$scope.adminadduserformessageshow = false;
+						$scope.adminadduserformessagealert = "alert-danger";
+					} else if(response.data.passwordlength == true) {
+						$scope.adminadduserformessage = "Password must be more than 5 characters";
+						$scope.adminadduserformessageshow = false;
+						$scope.adminadduserformessagealert = "alert-danger";
+					} else if(response.data.emailcorrect == true) {
+						$scope.adminadduserformessage = "Please enter a valid email address";
+						$scope.adminadduserformessageshow = false;
+						$scope.adminadduserformessagealert = "alert-danger";
+					} else if(response.data.querysuccess == false) {
+						console.log(response);
+						$scope.adminadduserformessageshow = false;
+						$scope.adminadduserformessagealert = "alert-success";
+						$scope.adminadduserformessage = "Registration successful.";
+						$scope.usersadminaccount.push({
+							'customer_id': response.data.customer_id,
+							'firstname': $scope.adminadduserform.firstname,
+							'middlename': $scope.adminadduserform.middlename,
+							'lastname': $scope.adminadduserform.lastname,
+							'age': $scope.adminadduserform.age,
+							'gender': $scope.adminadduserform.gender,
+							'address': $scope.adminadduserform.address,
+							'nationality': $scope.adminadduserform.nationality,
+							'username': $scope.adminadduserform.username,							
+							'customer_password': $scope.adminadduserform.password,
+							'user_email': $scope.adminadduserform.email
+						});
+					}
+				});
+				
+			
 			}
 
 			$scope.usersadmintable();
@@ -623,6 +710,10 @@ var application = angular.module('App', ['ui.router']);
 	}]);
 
 	application.controller('userhostelrycontroller', ['$scope', '$http', '$location', function($scope, $http, $location) {
+
+		$scope.pageSize = 10;
+		$scope.currentPage = 1;
+
 		$http({
 				method: 'GET',
 				url: './services/checkSession.php',
@@ -737,7 +828,320 @@ var application = angular.module('App', ['ui.router']);
 			
 	}]);
 
+application.filter('startFrom', function() {
+	return function(data, start) {
+		return data.slice(start);
+	}
+});
 
+	application.controller('adminreservationscontroller', ['$scope', '$http', '$location', function($scope, $http, $location) {
+		$(document).ready(function() {
+				$(".loading").fadeOut("slow");
+			});
+		$http({
+				method: 'GET',
+				url: './services/adminhome.php',
+			}).then(function(response) {
+				console.log(response);
+				if(response.data.adminsession == false) {
+					$location.path('/admin');
+					$scope.loginUser = "Invalid username or password.";
+				} else {
+					$location.path('/adminreservations');
+				}
+			});
+
+			$scope.adminlogout = function() {
+				$http({
+					method: 'GET',
+					url: './services/adminlogout.php',
+				}).then(function(response) {
+					console.log(response);
+					if(response.data.logoutmessage == true) {
+						$location.path('/admin');
+					}
+				});
+			}
+
+			$scope.reservationtableform = [];
+
+			$scope.reservationtable = function() {
+				$http({
+					method: 'GET',
+					url: './services/adminreservationservice.php'
+				}).then(function(response) {
+					$scope.reservationtableform = response.data;
+				});
+			}
+
+			$scope.deletereservationtable = function(reservationid) {
+				$http({
+					method: 'POST',
+					url: './services/adminreservationdeleteservice.php',
+					data: {'reservationid': reservationid}
+				}).then(function(response) {
+					location.reload();
+				});
+			}
+
+			$scope.reservationupdatemodalhide = false;
+			$scope.reservationchangeroomhide = true;
+			$scope.selectedhostelry = true;
+			$scope.reservationmodalid = "";
+			$scope.reservationmodalroom = "";
+			$scope.changeroomdisable = false;
+			$scope.canceldisable = true;
+			$scope.rroomschange = true;
+
+			$scope.reservationmopal = function(reservationidzxc) {
+				$http({
+					method: 'POST',
+					url: './services/reservationupdatemodalservice.php',
+					data: {'reservationidzxc': reservationidzxc}
+				}).then(function(response) {
+					$scope.reservationmodalid = response.data[0].reservation_id;
+					$scope.reservationmodalroom = response.data[0].room_name;
+				});
+			}
+
+			$scope.changeroomreservation = [];
+			$scope.changemodalsize = "modal-md";
+			$scope.modalhostelrytable = false;
+			$scope.modalroomtable = true;
+
+			$scope.changeroombutton = function() {
+				$scope.reservationupdatemodalhide = true;
+				$scope.reservationchangeroomhide = false;
+				
+				$scope.changeroomdisable = true;
+				$scope.canceldisable = false;
+				$scope.changemodalsize = "modal-lg";
+				$http({
+					method: 'GET',
+					url: './services/getallhostelryservice.php'
+				}).then(function(response) {
+					console.log(response);
+					$scope.changeroomreservation = response.data;
+				});
+			}
+
+			$scope.amdminroomchange = [];
+
+			$scope.selectchangehostelry = function(hostelryselected) {
+				$http({
+					method: 'POST',
+					url: './services/editroomselectedhostelry.php',
+					data: {'hostelryselected': hostelryselected}
+				}).then(function(response) {
+					console.log(response);
+					$scope.amdminroomchange = response.data;
+				});
+				$scope.reservationchangeroomhide = true;
+				$scope.selectedhostelry = false;
+			}
+
+			$scope.rchangereservation = [];
+			$scope.rchangereservationform = [];
+
+			$scope.rselectroom = function(roomadinid, roomnumber, roomadminname, roomadmintpe, roomadmincapacity, roomadminrpice) {
+				$scope.rchangereservation.push({
+					'roomadinid': roomadinid,
+					'roomnumber': roomnumber,
+					'roomadminname': roomadminname,
+					'roomadmintpe': roomadmintpe,
+					'roomadmincapacity': roomadmincapacity,
+					'roomadminrpice': roomadminrpice
+				});
+				$scope.rroomschange = false;
+				$scope.modalhostelrytable = true;
+				$scope.rchangereservationform = $scope.rchangereservation[0];
+			}
+
+			$scope.cancelbutton = function() {
+				$scope.reservationchangeroomhide = true;
+				$scope.changeroomdisable = false;
+				$scope.canceldisable = true;
+				$scope.reservationupdatemodalhide = false;
+				$scope.reservationchangeroomhide = true;
+				$scope.selectedhostelry = true;
+				$scope.changeroomdisable = false;
+				$scope.canceldisable = true;
+				$scope.changemodalsize = "modal-md";
+				$scope.rroomschange = true;
+			}
+
+			$scope.closeupdatemodal = function() {
+				$scope.reservationmodalid = "";
+				$scope.reservationmodalroom = "";
+				$scope.reservationupdatemodalhide = false;
+				$scope.reservationchangeroomhide = true;
+				$scope.selectedhostelry = true;
+				$scope.changeroomdisable = false;
+				$scope.canceldisable = true;
+				$scope.changemodalsize = "modal-md";
+				$scope.rroomschange = true;
+			}
+
+			$('.datepicker').datepicker({
+			    startDate: '-3d'
+			});
+
+			setInterval(function(){ $scope.reservationtable(); }, 5000);
+
+			$scope.reservationtable();
+
+	}]);
+
+	application.controller('adminroomscontroller', ['$scope', '$http', '$location', function($scope, $http, $location) {
+		$(document).ready(function() {
+				$(".loading").fadeOut("slow");
+			});
+		$http({
+				method: 'GET',
+				url: './services/adminhome.php',
+			}).then(function(response) {
+				console.log(response);
+				if(response.data.adminsession == false) {
+					$location.path('/admin');
+					$scope.loginUser = "Invalid username or password.";
+				} else {
+					$location.path('/adminrooms');
+				}
+			});
+
+			$scope.adminlogout = function() {
+				$http({
+					method: 'GET',
+					url: './services/adminlogout.php',
+				}).then(function(response) {
+					console.log(response);
+					if(response.data.logoutmessage == true) {
+						$location.path('/admin');
+					}
+				});
+			}
+
+	}]);
+
+	application.controller('comparecontroller', ['$scope', '$http', '$location', function($scope, $http, $location) {
+		$(document).ready(function() {
+				$(".loading").fadeOut("slow");
+			});
+
+		$scope.pageSize = 10;
+		$scope.currentPage = 1;
+
+		$scope.pageSizeq = 10;
+		$scope.currentPageq = 1;
+
+		$scope.pageSizeone = 10;
+		$scope.currentPageone = 1;
+
+		$scope.pageSizetwo = 10;
+		$scope.currentPagetwo = 1;
+
+		$http({
+				method: 'GET',
+				url: './services/checkSession.php',
+			}).then(function(response) {
+				console.log(response);
+				if(response.data.userSession == false) {
+					$location.path('/login');
+					$scope.loginUser = "Invalid username or password.";
+				} else {
+					$location.path('/compare');
+				}
+			});
+
+			$scope.logoutfunction = function() {
+				$http({
+					method: 'GET',
+					url: './services/logout.php'
+				}).then(function(response) {
+					if(response.data.logoutmessage == true) {
+						$location.path('/logoutlandingpage');
+					}
+				});
+			}
+
+			$scope.hostelryform = [];
+
+			$scope.gethostelry = function() {
+				$http({
+					method: 'GET',
+					url: './services/gethostelries.php'
+				}).then(function(response) {
+					$scope.hostelryform = response.data;
+					console.log(response.data);
+				});
+			}
+
+			$scope.viewreservedrooms = function() {
+				$http({
+					method: 'GET',
+					url: './services/viewreservedroomservice.php'
+				}).then(function(response) {
+					$scope.userviewreservedrooms = response.data;
+				});
+			}
+
+			$scope.roomoneform = [];
+
+			$scope.roomone = function(id) {
+				$http({
+					method: 'POST',
+					url: './services/gethostelryroomview.php',
+					data: {'id': id}
+				}).then(function(response) {
+					$scope.roomoneform = response.data;
+				});
+			}
+
+			$scope.closeone = function() {
+				$scope.roomoneform = [];
+			}
+
+			$scope.roomtwoform = [];
+
+			$scope.roomtwo = function(id) {
+				$http({
+					method: 'POST',
+					url: './services/gethostelryroomview.php',
+					data: {'id': id}
+				}).then(function(response) {
+					$scope.roomtwoform = response.data;
+				});
+			}
+
+			$scope.closetwo = function() {
+				$scope.roomtwoform = [];
+			}
+
+			$scope.selectoneform = {};
+
+			$scope.selectone = function(type, desc, cap, price) {
+				$scope.selectoneform = {
+					'type': type,
+					'desc': desc,
+					'cap': cap,
+					'price': price
+				};
+			}
+
+			$scope.selecttwoform = {};
+
+			$scope.selecttwo = function(type, desc, cap, price) {
+				$scope.selecttwoform = {
+					'type': type,
+					'desc': desc,
+					'cap': cap,
+					'price': price
+				};
+			}
+
+			$scope.gethostelry();
+
+	}]);
 
 
 

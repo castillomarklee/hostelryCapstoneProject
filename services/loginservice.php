@@ -10,16 +10,21 @@
 	$username = $formLogin->username;
 	$password = $formLogin->password;
 
-	$login = mysqli_query($conn, "SELECT username FROM customer WHERE username='$username' AND customer_password='$password'");
+	$id = '';
+
+	$login = mysqli_query($conn, "SELECT * FROM customer WHERE username='$username' AND customer_password='$password'");
 
 	$check_username = mysqli_num_rows($login);
 
 	if($check_username == 0) {
 		$check_UsernameLogin = true;
 	} else {
+		while ($querylist = mysqli_fetch_assoc($login)) {
+			$id = $querylist['customer_id'];
+		}
 		$check_UsernameLogin = false;
 		session_start();
-		$_SESSION['userlogin'] = $username;
+		$_SESSION['userlogin'] = $id;
 	}
 
 	$data["UsernameLogin"] = $check_UsernameLogin;

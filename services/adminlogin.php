@@ -4,8 +4,8 @@
 
 	$data = array();
 	
-	$adminusername = 'hostelryadminlogin';
-	$adminpassword = 'hostelrytravelers';
+	$adminusername = 'admin';
+	$adminpassword = '12345';
 
 	$username = $adminlogin->username;
 	$password = $adminlogin->password;

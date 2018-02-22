@@ -1,4 +1,4 @@
-<div>
+<div id="hostelry">
 	
 	<!-- Navbar -->
   <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -10,15 +10,15 @@
 	      <li class="active"><a href="#!adminhome"> Home</a></li>
 	      <li><a href="#!adminhostelryroute"> Hostelry</a></li>
 	      <li><a href="#!usersadmin"> Users</a></li>
-	      <li><a href="#"> Reservations</a></li>
-	      <li><a href="#"> Rooms</a></li>
+	      <li><a href="#!adminreservations"> Reservations</a></li>
+	      <li><a href="#!adminrooms"> Rooms</a></li>
 	    </ul>
 	    <ul class="nav navbar-nav navbar-right">
 	      <li><a ng-click="adminlogout()" style="cursor: pointer;"><span class="glyphicon glyphicon-user"></span> Log out</a></li>
 	    </ul>
 	  </div>
 	</nav>
-
+<div class="loading">Loading&#8230;</div>
 	
 
 	<div class="row"  style="padding-top: 50px;">
@@ -29,7 +29,6 @@
 			          <ul class="nav nav-tabs">
 						  <li class="active"><a data-toggle="tab" data-target="#add" style="cursor: pointer;">Add</a></li>
 						  <li><a data-toggle="tab" data-target="#view" style="cursor: pointer;">View</a></li>
-						  <li><a data-toggle="tab" data-target="#update" style="cursor: pointer;">Update</a></li>
 						</ul>
 
 						<div class="tab-content">
@@ -37,7 +36,11 @@
 						    <form method="POST" ng-submit="adminhostelryaddquery()">
 						    	<br>
 								<input class="form-control" ng-model="adminhostelryform.hostelryname" id="hostelryname" type="text" placeholder="Name"><br>
-								<input class="form-control" ng-model="adminhostelryform.hostelrytype" id="hostelrytype" type="text" placeholder="Type"><br>
+								  <select class="form-control" ng-model="adminhostelryform.hostelrytype">
+								    <option>Hotel</option>
+								    <option>Inn</option>
+								    <option>Lodge</option>
+								  </select><br>
 								<input class="form-control" ng-model="adminhostelryform.hostelrydescription" id="hostelrydescription" type="text" placeholder="Description"><br>
 								<input class="form-control" ng-model="adminhostelryform.hostelryusername" id="hostelryusername" type="text" placeholder="Username"><br>
 								<input class="form-control" ng-model="adminhostelryform.hostelrypassword" id="hostelrypassword" type="text" placeholder="Password"><br>

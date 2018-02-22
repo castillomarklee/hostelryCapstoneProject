@@ -151,12 +151,15 @@
               <div class="modal-body">
                 <form method="POST" ng-submit="hostelryuseraddroom()">
                   <br>
-                  <input type="text" name="roomnumber" id="room_number" class="form-control" placeholder="Room Number" ng-model="hostelryuseraddroomform.roomnumber"><br>
+                  <input type="text" name="roomnumber" id="room_number" class="form-control" onkeydown='return (event.which >= 48 && event.which <= 57) 
+   || event.which == 8 || event.which == 46' placeholder="Room Number" ng-model="hostelryuseraddroomform.roomnumber"><br>
                   <input type="text" name="roomname" id="room_name" class="form-control" placeholder="Room Name" ng-model="hostelryuseraddroomform.roomname"><br>
                   <input type="text" name="roomtype" id="room_type" class="form-control" placeholder="Room Type" ng-model="hostelryuseraddroomform.roomtype"><br>
                   <input type="text" name="roomdescription" id="room_description" class="form-control" placeholder="Room Description" ng-model="hostelryuseraddroomform.roomdescription"><br>
-                  <input type="text" name="roomcapacity" id="capacity" class="form-control" placeholder="Room Capacity" ng-model="hostelryuseraddroomform.roomcapacity"><br>
-                  <input type="text" name="roomprice" id="capacity" class="form-control" placeholder="Room Price" ng-model="hostelryuseraddroomform.roomprice"><br>
+                  <input type="text" name="roomcapacity" id="capacity" class="form-control" onkeydown='return (event.which >= 48 && event.which <= 57) 
+   || event.which == 8 || event.which == 46' placeholder="Room Capacity" ng-model="hostelryuseraddroomform.roomcapacity"><br>
+                  <input type="text" name="roomprice" id="capacity" onkeydown='return (event.which >= 48 && event.which <= 57) 
+   || event.which == 8 || event.which == 46' class="form-control" placeholder="Room Price" ng-model="hostelryuseraddroomform.roomprice"><br>
                   <button type="submit" class="btn btn-primary btn-block">Submit</button>
                   <p style="font-size: 20px;">{{hostelryuserformsuccess}}</p>
                 </form>

@@ -1,0 +1,168 @@
+<div>
+	<div>
+	
+	<!-- Navbar -->
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#">Admin</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+	      <li class="active"><a href="#!adminhome"> Home</a></li>
+	      <li><a href="#!adminhostelryroute"> Hostelry</a></li>
+	      <li><a href="#!usersadmin"> Users</a></li>
+	      <li><a href="#!adminreservations"> Reservations</a></li>
+	      <li><a href="#!adminrooms"> Rooms</a></li>
+	    </ul>
+	    <ul class="nav navbar-nav navbar-right">
+	      <li><a ng-click="adminlogout()" style="cursor: pointer;"><span class="glyphicon glyphicon-user"></span> Log out</a></li>
+	    </ul>
+	  </div>
+	</nav>
+
+	  <div class="loading">Loading&#8230;</div>
+
+	
+
+	<div class="row"  style="padding-top: 50px;">
+			  <div class="col-md-11" style="margin-left: 50px;">
+			    <div class="panel panel-primary">
+			      <div class="panel-heading" style="padding-left: 20px; font-size: 20px;">Reservation</div>
+			      <div class="panel-body">
+
+
+						    	<div class="table-responsive">
+						    		<table class="table">
+						    		<thead>
+						    			<tr>
+						    				<th>ID</th>
+							    			<th>Description</th>
+							    			<th>Date</th>
+							    			<th>Code</th>
+							    			<th>Status</th>
+							    			<th>Room name</th>
+							    			<th>Customer name</th>
+						    			</tr>
+						    		</thead>
+						    		<tbody>
+						    			<tr ng-repeat="i in reservationtableform">
+						    				<td>{{i.reservation_id}}</td>
+						    				<td>{{i.reservation_description}}</td>
+						    				<td>{{i.reservation_date}}</td>
+						    				<td>{{i.reservation_code}}</td>
+						    				<td>{{i.reservation_status}}</td>
+						    				<td>{{i.room_name}}</td>
+						    				<td>{{i.firstname}} {{i.middlename}} {{i.lastname}}</td>
+							    			<td><button type="button" class="btn btn-danger" ng-click="deletereservationtable(i.reservation_id)">Delete</button></td>
+							    			<td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#updatemodal" ng-click="reservationmopal(i.reservation_id)">Update</button></td>
+						    			</tr>
+						    		</tbody>
+						    	</table>
+						    	</div>
+						    	<div id="updatemodal" class="modal fade" role="dialog">
+								  <div class="modal-dialog {{changemodalsize}}">
+
+								    <!-- Modal content-->
+								    <div class="modal-content">
+								      <div class="modal-header">
+								        <button type="button" class="close" data-dismiss="modal">&times;</button>
+								        <h4 class="modal-title">Update</h4>
+								      </div>
+								      <div class="modal-body">
+								        
+								        <form method="POST" ng-submit="usersadminmodalupdate()">
+									    	<br>
+									    	<div ng-hide="reservationupdatemodalhide">
+									    		<h1>Reservation ID: {{reservationmodalid}}</h1>
+									    		<h1 style="padding-top: 20px;">Room: {{reservationmodalroom}}</h1><br>
+									    	</div>
+
+									    	<div ng-hide="reservationchangeroomhide">
+									    		<h1>Choose Hostelry:</h1>
+									    		  <table class="table" ng-hide="modalhostelrytable">
+												    <thead>
+												      <tr>
+												        <th>ID</th>
+												        <th>Name</th>
+												        <th>Type</th>
+												        <th>Description</th>
+												      </tr>
+												    </thead>
+												    <tbody>
+												      <tr ng-repeat="r in changeroomreservation">
+												        <td>{{r.hostelry_id}}</td>
+												        <td>{{r.hostelry_name}}</td>
+												        <td>{{rhostelry_type}}</td>
+												        <td>{{r.hostelry_description}}</td>
+												        <td><button type="button" ng-click="selectchangehostelry(r.hostelry_id)" class="btn btn-primary btn-md">Select</button></td>
+												      </tr>
+												    </tbody>
+												  </table>
+									    		
+									    	</div>
+
+									    	<div ng-hide="selectedhostelry">
+									    		<table class="table" ng-hide="modalhostelrytable">
+												    <thead>
+												      <tr>
+												        <th>ID</th>
+												        <th>Number</th>
+												        <th>Name</th>
+												        <th>Type</th>
+												        <th>Description</th>
+												        <th>Capacity</th>
+												        <th>Status</th>
+												        <th>Price</th>
+												      </tr>
+												    </thead>
+												    <tbody>
+												      <tr ng-repeat="t in amdminroomchange">
+												        <td>{{t.room_id}}</td>
+												        <td>{{t.room_number}}</td>
+												        <td>{{t.room_name}}</td>
+												        <td>{{t.room_type}}</td>
+												        <td>{{t.room_description}}</td>
+												        <td>{{t.capacity}}</td>
+												        <td>{{t.room_status}}</td>
+												        <td>{{t.room_price}}</td>
+
+												        <td><button type="button" ng-click="rselectroom(t.room_id, t.room_number, t.room_name, t.room_type, t.capacity, t.room_price)" class="btn btn-primary btn-md">Select</button></td>
+												      </tr>
+												    </tbody>
+												  </table>
+									    	</div>
+									    	<div ng-hide="rroomschange">
+									    		<h1><strong>Selected Room:</strong></h1>
+									    		<div style="padding-left: 80px;">
+									    			<h2>ID: <strong>{{rchangereservationform.roomadinid}}</strong></h2>
+									    		<h2>Number: <strong>{{rchangereservationform.roomnumber}}</strong></h2>
+									    		<h2>Name: <strong>{{rchangereservationform.roomadminname}}</strong></h2>
+									    		<h2>Type: <strong>{{rchangereservationform.roomadmintpe}}</strong></h2>
+									    		<h2>Capacity: <strong>{{rchangereservationform.roomadmincapacity}}</strong></h2>
+									    		<h2>Price: <strong>{{rchangereservationform.roomadminrpice}}</strong></h2>
+									    		</div>
+									    		
+									    		<input class="datepicker form-control" data-date-format="mm-dd-yyyy" placeholder="Schedule"><br>
+									    		<button type="button" class="btn btn-success btn-block">Save</button>
+									    	</div>
+									    	<button class="btn btn-success btn-block" ng-click="changeroombutton()" ng-hide="changeroomdisable">Change Room</button><br>
+									    	<button class="btn btn-success btn-block" ng-click="cancelbutton()" ng-hide="canceldisable">Cancel</button><br>
+											
+										</form>
+
+								      </div>
+								      <div class="modal-footer">
+								        <button type="button" class="btn btn-default" ng-click="closeupdatemodal()" data-dismiss="modal">Close</button>
+								      </div>
+								    </div>
+
+								  </div>
+								</div>
+
+			      </div>
+			  </div>
+			</div>
+	    </div>
+
+</div>
+</div>
