@@ -1,0 +1,39 @@
+<div>
+      <!-- Navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#!hostelryuserhome">Hostelry Admin</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a ng-click="" style="cursor: pointer;">Profile</a></li>
+          <li><a ng-click="hostelryhomelogout()" style="cursor: pointer;"><span class="glyphicon glyphicon-user"></span> Log out</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="panel panel-primary" style="width: 90%; margin-left: 65px; margin-top: 50px;">
+      <div class="panel-body">
+
+        <div class="row">
+          <div class="col-xs-5">
+            Profile:
+            <input type="file" file-model="myFile"/><br>
+              <button ng-click="uploadFile()" class="btn btn-primary btn-sm">Upload</button><br><br>
+              <img ng-src="./upload/{{photoform.photolink}}" style="height: 450px; width: 400px;" />
+          </div>
+          <div class="col-xs-5" style="margin-top: 150px;">
+            <h1>Update Profile</h1>
+            <input type="text" ng-model="infoform.hostelry_name" class="form-control"><br>
+            <input type="text" ng-model="infoform.hostelry_type" class="form-control"><br>
+            <input type="text" ng-model="infoform.hostelry_description" class="form-control"><br>
+            <input type="text" ng-model="infoform.hostelry_username" class="form-control"><br>
+            <input type="text" ng-model="infoform.hostelry_password" class="form-control"><br>
+            <button class="btn btn-primary btn-md center-block" ng-click="updateinfo()">Save</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+</div>

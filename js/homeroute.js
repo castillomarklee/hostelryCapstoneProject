@@ -97,6 +97,11 @@ var application = angular.module('App', ['ui.router', 'ui.bootstrap']);
 	            url: '/compare',
 	            templateUrl: './views/compare.html',
 	            controller: 'comparecontroller'
+	         })
+	         .state('hostelryprofile', {
+	            url: '/hostelryprofile',
+	            templateUrl: './views/hostelryprofile.html',
+	            controller: 'hostelryprofilecontroller'
 	         });
 
     }
@@ -299,7 +304,7 @@ var application = angular.module('App', ['ui.router', 'ui.bootstrap']);
 					url: './services/adminhostelryadd.php',
 					data: $scope.adminhostelryform
 				}).then(function(response) {
-					
+					console.log(response);
 					if(response.data.emptyform == true) {
 						$scope.adminhostelryresponse = "Please fill in all the fields.";
 					} else if(response.data.validateusername == true) {
@@ -1143,7 +1148,108 @@ application.filter('startFrom', function() {
 
 	}]);
 
+	application.controller('hostelryprofilecontroller', ['$scope', '$http', '$location', 'fileUpload', function($scope, $http, $location, fileUpload) {
 
+			$http({
+				method: 'GET',
+				url: './services/hostelryusersession.php',
+			}).then(function(response) {
+				console.log(response);
+
+				if(response.data.userSession == false) {
+					$location.path('/hostelryuser');
+				} else {
+					$location.path('/hostelryprofile');
+				}
+			});
+
+			$scope.uploadFile = function(){
+	        var file = $scope.myFile;
+	        console.log('file is ' );
+	        console.dir(file);
+
+	        var uploadUrl = "./services/savephotohostelry.php";
+	        var text = $scope.name;
+	        fileUpload.uploadFileToUrl(file, uploadUrl);
+	        
+	    }
+
+	    $scope.photoform = {};
+
+	    $scope.profilephoto = function() {
+	    	$http.get("./services/viewprofilephoto.php").then(function(response) {
+	    		$scope.photoform = response.data[0];
+	    		console.log($scope.photoform);
+	    	});
+	    }
+
+	    $scope.hostelryhomelogout = function() {
+				$http({
+					method: 'GET',
+					url: './services/adminlogout.php',
+				}).then(function(response) {
+					console.log(response);
+					if(response.data.logoutmessage == true) {
+						$location.path('/hostelryuser');
+					}
+				});
+			}
+
+		$scope.infoform = {};
+
+		$scope.hostelryinfo = function() {
+			$http({
+					method: 'GET',
+					url: './services/hostelryinfoservice.php',
+				}).then(function(response) {
+					$scope.infoform = response.data[0];
+				});
+		}
+
+		$scope.updateinfo = function() {
+			$http({
+					method: 'POST',
+					url: './services/updateinfoservice.php',
+					data: $scope.infoform
+				}).then(function(response) {
+					location.reload();
+				});
+		}
+
+		$scope.hostelryinfo();
+		$scope.profilephoto();
+
+	}]);
+
+	application.directive('fileModel', ['$parse', function ($parse) {
+    return {
+    restrict: 'A',
+    link: function(scope, element, attrs) {
+        var model = $parse(attrs.fileModel);
+        var modelSetter = model.assign;
+
+        element.bind('change', function(){
+            scope.$apply(function(){
+                modelSetter(scope, element[0].files[0]);
+            });
+        });
+    }
+   };
+}]);
+
+application.service('fileUpload', ['$http', function ($http) {
+    this.uploadFileToUrl = function(file, uploadUrl){
+         var fd = new FormData();
+         fd.append('file', file);
+         $http.post(uploadUrl, fd, {
+             transformRequest: angular.identity,
+             headers: {'Content-Type': undefined,'Process-Data': false}
+         }).then(function(response) {
+         	console.log(response);
+         	location.reload();
+         });
+     }
+ }]);
 
 
 

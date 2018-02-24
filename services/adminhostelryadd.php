@@ -38,6 +38,8 @@
 				} else {
 					$id =  "hostelry-" . rand(10, 100) . "-" . rand();
 					$queryqwe = mysqli_query($conn, "INSERT INTO hostelryacc VALUES('$id', '$hostelryqueryname', '$hostelryquerytype', '$hostelryquerydescription', '$hostelryqueryusername', '$hostelryquerypassword')");
+					$photoid = "photo-" . rand(1, 10000) . "-" . date("m-d-Y");
+					$photoquery = mysqli_query($conn, "INSERT INTO photos VALUES('$photoid', '$id', 'defaultprofile.jpg')");
 
 					if($queryqwe) {
 						$querysuccess = false;

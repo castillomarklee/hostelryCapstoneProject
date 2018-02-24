@@ -39,8 +39,6 @@
       </div>
     </nav>
 
-    <h1 style="color: white; padding-left: 130px; padding-top: 100px;">List of Hostelries in Isulan</h1>
-
     <ul uib-pagination total-items="hostelryviewlist.length" ng-model="currentPage" style="margin-left: 580px;" ng-change="pageSize"></ul><br>
 
     <div ng-repeat="i in hostelryviewlist | startFrom:(currentPage - 1) * pageSize | limitTo:pageSize | filter:searchhostelry" style="margin-left: 110px; color: white;">
@@ -48,6 +46,7 @@
     	<div class="well well-lg" style="background-color: rgba(0, 0, 0, 0.6); width: 40%; margin-left: 50px; margin-top: 40px; float: left;">
 
     		<h1 style="font-size: 20px; font-style: Arial; text-align: center;">{{i.hostelry_name}}</h1>
+        <img ng-src="./upload/{{i.photolink}}" style="height: 200px; width: 300px; margin-left: 70px;" />
     		<p style="text-align: center;">{{i.hostelry_description}}</p>
     		<button type="button" class="btn btn-primary btn-md" style="margin-left: 150px;">View</button>
     		<button type="button" class="btn btn-danger btn-md" data-target="#reservemodal" data-toggle="modal" ng-click="hostelrygettableservice(i.hostelry_id, i.hostelry_name)">Reserve</button>
