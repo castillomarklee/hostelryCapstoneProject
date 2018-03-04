@@ -14,8 +14,9 @@
 	$description = $hostelry->hostelrydescriptionmodal;
 	$username = $hostelry->hostelryusernamemodal;
 	$password = $hostelry->hostelrypasswordmodal;
+	$hosaddress = $hostelry->hosaddress;
 
-	$query = mysqli_query($conn, "UPDATE hostelryacc SET hostelry_name='$name', hostelry_type='$type', hostelry_description='$description', hostelry_username='$username', hostelry_password='$password' WHERE hostelry_id='$id'");
+	$query = mysqli_query($conn, "UPDATE hostelryacc SET hostelry_name='$name', hostelry_type='$type', hostelry_description='$description', hostelry_address='$hosaddress', hostelry_username='$username', hostelry_password='$password' WHERE hostelry_id='$id'");
 
 	if($query) {
 		$querycheck = false;

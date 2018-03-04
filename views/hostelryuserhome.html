@@ -6,6 +6,7 @@
           <a class="navbar-brand" href="#!hostelryuserhome">Hostelry Admin</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
+          <li><a href="#!hprint" style="cursor: pointer;">Print</a></li>
           <li><a href="#!hostelryprofile" style="cursor: pointer;">Profile</a></li>
           <li><a ng-click="hostelryhomelogout()" style="cursor: pointer;"><span class="glyphicon glyphicon-user"></span> Log out</a></li>
         </ul>
@@ -210,7 +211,10 @@
                       <input type="text" name="roomtype" id="room_type" class="form-control" placeholder="Room Type" ng-model="hostelryyusersupdateform.room_type"><br>
                       <input type="text" name="roomdescription" id="room_description" class="form-control" placeholder="Room Description" ng-model="hostelryyusersupdateform.room_description"><br>
                       <input type="text" name="roomcapacity" id="capacity" class="form-control" placeholder="Room Capacity" ng-model="hostelryyusersupdateform.capacity"><br>
-                      <input type="text" name="roomstatus" id="status" class="form-control" placeholder="Room Capacity" ng-model="hostelryyusersupdateform.room_status"><br>
+                      <!-- <input type="text" name="roomstatus" id="status" class="form-control" placeholder="Room Capacity" ng-model="hostelryyusersupdateform.room_status"><br> -->
+                      <select>
+                        
+                      </select>
                       <input type="text" name="roomprice" id="capacity" class="form-control" placeholder="Room Price" ng-model="hostelryyusersupdateform.room_price"><br>
                       <button type="submit" class="btn btn-primary btn-block">Submit</button>
                       <button type="button" class="btn btn-danger btn-block" ng-click="closeupdate()">Cancel</button>

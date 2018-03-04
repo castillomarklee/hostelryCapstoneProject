@@ -24,7 +24,7 @@
 
 	$hostelry_idquery = mysqli_query($conn, "SELECT hostelry_id FROM hostelryacc WHERE hostelry_username='$hostelry_idsession'");
 
-	$hostelry_id = "";
+	$hostelry_id = $hostelry_idsession;
 
 	while($querylist = mysqli_fetch_assoc($hostelry_idquery)) {
 		$hostelry_id = $querylist['hostelry_id'];
@@ -41,7 +41,7 @@
 
 		$status = 'available';
 
-		$query = mysqli_query($conn, "INSERT INTO rooms VALUES('$id', '$number', '$name', '$type', '$description', '$capacity','$status', '$price', '$hostelry_id')");
+		$query = mysqli_query($conn, "INSERT INTO rooms VALUES('$id', '$number', '$name', '$type', '$description', '$capacity','$status', '$price', '$hostelry_idsession')");
 
 		if($query) {
 			$querysuccess = false;
@@ -53,7 +53,6 @@
 
 	$data["hostelryuserroomexist"] = $checkroomexist;
 	$data["querysuccess"] = $querysuccess;
-	$data["id"] = $id;
 	$data["hostelry_id"] = $hostelry_id;
 
 	echo json_encode($data);

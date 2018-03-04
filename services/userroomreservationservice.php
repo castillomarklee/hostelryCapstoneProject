@@ -29,7 +29,7 @@
 	$reservationstatus = "reserved";
 	$roomstatus = "reserved";
 
-	$query = mysqli_query($conn, "INSERT INTO reservation VALUES('$reservationid', '$reservationdescription', '$reservationdate',  '$reservationcode', '$reservationstatus', '$id', '$userid')");
+	$query = mysqli_query($conn, "INSERT INTO reservation VALUES('$reservationid', '$reservationdescription', '$reservationdate',  '$reservationcode', '$reservationstatus', '$id', '$usersession')");
 
 	$roomquery = mysqli_query($conn, "UPDATE rooms SET room_status='$roomstatus' WHERE room_id='$id'");
 

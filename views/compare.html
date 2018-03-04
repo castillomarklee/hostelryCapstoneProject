@@ -215,6 +215,70 @@
     </div>
 </div>
 
+<div id="viewroom" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">View</h4>
+        </div>
+        <div class="modal-body">
+          <ul uib-pagination total-items="roomoneform.length" ng-model="currentPageone" ng-change="pageSizeone"></ul><br>
+            <table class="table">
+            <thead>
+              <tr>
+                <th>Room</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="q in roomoneform | startFrom:(currentPageone - 1) * pageSizeone | limitTo:pageSizeone">
+                <td>{{q.room_name}}</td>
+                <td><button class="btn btn-info btn-md" ng-click="selectone(q.room_type, q.room_description, q.capacity, q.room_price)" type="button">Select</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" ng-click="closetwo()" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+</div>
+
+<!-- Footer -->
+    <footer style="border-top: 2px; background-color: black; width: 100%; padding-bottom: 40px;">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <span class="copyright" style="color: white;">Copyright &copy; Hostelry Services 2017</span>
+          </div>
+          <div class="col-md-4">
+            <ul class="list-inline social-buttons">
+              <li class="list-inline-item">
+                <a href="#">
+                  <i class="fa fa-twitter"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#">
+                  <i class="fa fa-facebook"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#">
+                  <i class="fa fa-linkedin"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+
+
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -228,5 +292,10 @@
 
     <!-- Custom scripts for this template -->
     <script src="js/agency.min.js"></script>
+
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>  
+  
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6v5-2uaq_wusHDktM9ILcqIrlPtnZgEk&sensor=false">  
+    </script>  
 
 </div>

@@ -2,7 +2,7 @@
 	
 	include '../connection/connect.php';
 
-	$query = mysqli_query($conn, "SELECT hostelry_id, hostelry_name, hostelry_type, hostelry_description, hostelry_username, hostelry_password FROM hostelryacc");
+	$query = mysqli_query($conn, "SELECT hostelry_id, hostelry_name, hostelry_type, hostelry_description, hostelry_address, hostelry_username, hostelry_password FROM hostelryacc");
 
 	$hostelry = array();
 

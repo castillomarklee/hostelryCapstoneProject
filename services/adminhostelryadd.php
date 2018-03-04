@@ -15,6 +15,7 @@
 	$hostelryqueryname = $adminhostelryform->hostelryname;
 	$hostelryquerytype = $adminhostelryform->hostelrytype;
 	$hostelryquerydescription = $adminhostelryform->hostelrydescription;
+	$hosaddress = $adminhostelryform->address;
 	$hostelryqueryusername = $adminhostelryform->hostelryusername;
 	$hostelryquerypassword = $adminhostelryform->hostelrypassword;
 
@@ -37,7 +38,7 @@
 					$passwordlength = true;
 				} else {
 					$id =  "hostelry-" . rand(10, 100) . "-" . rand();
-					$queryqwe = mysqli_query($conn, "INSERT INTO hostelryacc VALUES('$id', '$hostelryqueryname', '$hostelryquerytype', '$hostelryquerydescription', '$hostelryqueryusername', '$hostelryquerypassword')");
+					$queryqwe = mysqli_query($conn, "INSERT INTO hostelryacc VALUES('$id', '$hostelryqueryname', '$hostelryquerytype', '$hostelryquerydescription', '$hosaddress', '$hostelryqueryusername', '$hostelryquerypassword')");
 					$photoid = "photo-" . rand(1, 10000) . "-" . date("m-d-Y");
 					$photoquery = mysqli_query($conn, "INSERT INTO photos VALUES('$photoid', '$id', 'defaultprofile.jpg')");
 

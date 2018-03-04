@@ -19,5 +19,31 @@
 </nav>
 <div class="loading">Loading&#8230;</div>
 
+<div class="container" style="margin-top: 100px;">
+  <div class="panel panel-default">
+  <div class="panel-body">
+    <h1 style="font-family: arial; padding-left: 40px;">Dashboard</h1><br><br>
+    <div class="row">
+      <h1 style="font-size: 30px; font-family: arial; padding-left: 40px;">Reservation Status</h1><br><br>
+      <canvas id="bar" style="padding-left: 20px;" class="chart chart-bar"
+        chart-data="reservationdata" height="70vw" chart-options="resoption" chart-labels="reservationlabel">
+      </canvas><br><br>
+      <div class="col-xs-4">
+        <h1 style="font-size: 30px; font-family: arial; padding-left: 40px;">Hostelry Reservations</h1><br>
+        <canvas id="doughnut" class="chart chart-pie"
+          chart-data="hcount" height="80vw" width="80vw" chart-labels="hlabel">
+        </canvas> 
+      </div>
+      <div class="col-xs-7">
+        <h1 style="font-size: 30px; font-family: arial; padding-left: 40px;">Hostelry Rooms</h1><br>
+        <canvas id="base" class="chart-horizontal-bar"
+          chart-data="rdata" height="200vw" chart-labels="rlabel" chart-options="roption">
+        </canvas> 
+      </div>
+    </div>
+  </div>
+</div>
+  
+</div>
 
 </div>

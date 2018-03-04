@@ -1,6 +1,9 @@
 'use strict';
 
-var application = angular.module('App', ['ui.router', 'ui.bootstrap']);
+var mapaddress = "";
+
+
+var application = angular.module('App', ['ui.router', 'ui.bootstrap', 'chart.js']);
 
 	application.config(['$stateProvider', '$urlRouterProvider',
     function($stateProvider, $urlRouterProvider) {
@@ -102,6 +105,11 @@ var application = angular.module('App', ['ui.router', 'ui.bootstrap']);
 	            url: '/hostelryprofile',
 	            templateUrl: './views/hostelryprofile.html',
 	            controller: 'hostelryprofilecontroller'
+	         })
+	         .state('hprint', {
+	            url: '/hprint',
+	            templateUrl: './views/hprint.html',
+	            controller: 'hprintcontroller'
 	         });
 
     }
@@ -121,7 +129,6 @@ var application = angular.module('App', ['ui.router', 'ui.bootstrap']);
 	        			url: './services/loginsubmit.php',
 	        			data: $scope.formData
 	        		}).then(function(response) {
-	        			$(".loading").fadeOut("slow");
 	        			console.log(response);
 	        			if(response.data.empty == true) {
 	        				$scope.userform = "Please fill the form.";
@@ -262,6 +269,66 @@ var application = angular.module('App', ['ui.router', 'ui.bootstrap']);
 					}
 				});
 			}
+
+			$scope.reservationlabel = [];
+			$scope.reservationdata = [];
+			$scope.resoption = {
+				scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    }
+                };
+
+			$http({
+				method: 'GET',
+				url: './services/reservationchart.php'
+			}).then(function(response) {
+				for(var i=0; i < response.data.length; i++) {
+					$scope.reservationlabel.push(response.data[i].reservation_status);
+					$scope.reservationdata.push(response.data[i].rescount);
+				}
+				console.log($scope.reservationdata);
+			});
+
+			$scope.hlabel = [];
+			$scope.hcount = [];
+
+			$http({
+				method: 'GET',
+				url: './services/accountcharts.php'
+			}).then(function(response) {
+				for(var i=0; i < response.data.length; i++) {
+					$scope.hlabel.push(response.data[i].hostelry_name);
+					$scope.hcount.push(response.data[i].hcount);
+				}
+				
+			});
+
+			$scope.rlabel = [];
+			$scope.rdata = [];
+			$scope.roption = {
+				scales: {
+                        xAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    }
+                };
+
+			$http({
+				method: 'GET',
+				url: './services/roomschart.php'
+			}).then(function(response) {
+				for(var i=0; i < response.data.length; i++) {
+					$scope.rlabel.push(response.data[i].hostelry_name);
+					$scope.rdata.push(response.data[i].rcount);
+				}
+				
+			});
 	}]);
 
 	application.controller('adminhostelrycontroller', ['$scope', '$http', '$location', function($scope, $http, $location) {
@@ -321,6 +388,7 @@ var application = angular.module('App', ['ui.router', 'ui.bootstrap']);
 							'hostelry_name': $scope.adminhostelryform.hostelryname,
 							'hostelry_type': $scope.adminhostelryform.hostelrytype,
 							'hostelry_description': $scope.adminhostelryform.hostelrydescription,
+							'hostelry_address': $scope.adminhostelryform.address,
 							'hostelry_username': $scope.adminhostelryform.hostelryusername,
 							'hostelry_password': $scope.adminhostelryform.hostelrypassword
 						}); 
@@ -361,6 +429,7 @@ var application = angular.module('App', ['ui.router', 'ui.bootstrap']);
 			$scope.updatename = "";
 			$scope.updatetype = "";
 			$scope.updatedescription = "";
+			$scope.updateaddress = "";
 			$scope.updateusername = "";
 			$scope.updatepassword = "";
 
@@ -376,6 +445,7 @@ var application = angular.module('App', ['ui.router', 'ui.bootstrap']);
 					$scope.updatename = response.data[0].hostelry_name;
 					$scope.updatetype = response.data[0].hostelry_type;
 					$scope.updatedescription = response.data[0].hostelry_description;
+					$scope.updateaddress = response.data[0].hostelry_address;
 					$scope.updateusername = response.data[0].hostelry_username;
 					$scope.updatepassword = response.data[0].hostelry_password;
 
@@ -387,7 +457,7 @@ var application = angular.module('App', ['ui.router', 'ui.bootstrap']);
 				$http({
 					method: 'POST',
 					url: './services/modalupdateservice.php',
-					data: {'hostelryidmodal': $scope.updateid, 'hostelrynamemodal': $scope.updatename, 'hostelrytypemodal': $scope.updatetype, 'hostelrydescriptionmodal': $scope.updatedescription, 'hostelryusernamemodal': $scope.updateusername, 'hostelrypasswordmodal': $scope.updatepassword}
+					data: {'hostelryidmodal': $scope.updateid, 'hostelrynamemodal': $scope.updatename, 'hostelrytypemodal': $scope.updatetype, 'hostelrydescriptionmodal': $scope.updatedescription, 'hosaddress': $scope.updateaddress, 'hostelryusernamemodal': $scope.updateusername, 'hostelrypasswordmodal': $scope.updatepassword}
 				}).then(function(response) {
 					console.log(response);
 					location.reload();
@@ -608,7 +678,9 @@ var application = angular.module('App', ['ui.router', 'ui.bootstrap']);
 					if(response.data.hostelryuserroomexist == true) {
 						$scope.hostelryuserformsuccess = "The room already exists.";
 					} else {
-						location.reload();
+						// location.reload();
+						console.log("THis is some data");
+						console.log(response);
 					}
 				});
 			}
@@ -664,6 +736,7 @@ var application = angular.module('App', ['ui.router', 'ui.bootstrap']);
 					url: './services/viewreservationservice.php'
 				}).then(function(response) {
 					$scope.viewreservationform = response.data;
+					console.log("Reserved Here");
 					console.log($scope.viewreservationform);
 				});
 			}
@@ -716,6 +789,8 @@ var application = angular.module('App', ['ui.router', 'ui.bootstrap']);
 
 	application.controller('userhostelrycontroller', ['$scope', '$http', '$location', function($scope, $http, $location) {
 
+		
+
 		$scope.pageSize = 10;
 		$scope.currentPage = 1;
 
@@ -742,6 +817,10 @@ var application = angular.module('App', ['ui.router', 'ui.bootstrap']);
 					}
 				});
 			}
+
+			$('#buttonprint').click(function(events) {
+				$('.print').wordExport();
+			});
 
 			$scope.hostelryviewlist = {};
 
@@ -826,7 +905,34 @@ var application = angular.module('App', ['ui.router', 'ui.bootstrap']);
 					url: './services/viewreservedroomservice.php'
 				}).then(function(response) {
 					$scope.userviewreservedrooms = response.data;
+					console.log("Reserved Rooms");
+					console.log($scope.userviewreservedrooms);
 				});
+			}
+
+			$scope.cancenreserve = function(resid) {
+				$http({
+					method: 'POST',
+					url: './services/cancelres.php',
+					data: {'resid': resid}
+				}).then(function(response) {
+					location.reload();
+				});	
+			}
+
+			$scope.viewrooms = function(hostelryid) {
+
+        	$http({
+					method: 'POST',
+					url: './services/getaddressservice.php',
+					data: {'hosid': hostelryid}
+				}).then(function(response) {
+					  $scope.addressmap = response.data[0].hostelry_address;
+				});	
+			}
+
+			$scope.closerooms = function() {
+				$scope.addressmap = "";
 			}
 
 			$scope.hostelrylist();
@@ -1253,5 +1359,36 @@ application.service('fileUpload', ['$http', function ($http) {
 
 
 
+	application.controller('hprintcontroller', ['$scope', '$http', '$location', function($scope, $http, $location) {
 
+			$http({
+				method: 'GET',
+				url: './services/hostelryusersession.php',
+			}).then(function(response) {
+				console.log(response);
+
+				if(response.data.userSession == false) {
+					$location.path('/hostelryuser');
+				} else {
+					$location.path('/hprint');
+				}
+			});
+
+			$scope.hostelryhomelogout = function() {
+				$http({
+					method: 'GET',
+					url: './services/adminlogout.php',
+				}).then(function(response) {
+					console.log(response);
+					if(response.data.logoutmessage == true) {
+						$location.path('/hostelryuser');
+					}
+				});
+			}
+
+			$scope.backHome = function() {
+				$location.path('/hostelryuserhome');
+			}
+
+	}]);
 
