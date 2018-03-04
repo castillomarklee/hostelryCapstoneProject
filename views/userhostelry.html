@@ -218,7 +218,7 @@
 				        <th>Room Name</th>
 				        <th>Room type</th>
 				        <th>Room Capacity</th>
-                <th>Room Price</th>
+                        <th>Room Price</th>
 				      </tr>
 				    </thead>
 				    <tbody>
@@ -236,6 +236,11 @@
 				  	<h2 style="padding-top: 20px; font-size: 40px;">Selected:</h2>
 				  	<p style="padding-left: 30px; font-size: 30px;">Room number: {{roomnumber}}</p>
 				  	<p style="padding-left: 30px; font-size: 30px; padding-top: 1px;">Room name: {{selecthostelryname}}</p>
+                    <br><br>
+                    <ul uib-pagination total-items="roomphotosuser.length" ng-model="currentPager" ng-change="pageSizer"></ul><br>
+                    <div ng-repeat="r in roomphotosuser | startFrom:(currentPage - 1) * pageSize | limitTo:pageSize">
+                        <img ng-src="./upload/{{r.photolink}}" style="height: 250px;" /><br><br>
+                    </div>
 				  </div>
 				<button type="button" style="margin-left: 195px;" ng-disabled="reservebuttoncancel" class="btn btn-primary btn-lg" ng-click="cancelbutton()">Cancel</button>
 	        	<button type="button" ng-click="reserveroom()" ng-disabled="reservebuttoncancel" class="btn btn-success btn-lg">Reserve</button>

@@ -27,11 +27,60 @@
             <input type="text" ng-model="infoform.hostelry_name" class="form-control"><br>
             <input type="text" ng-model="infoform.hostelry_type" class="form-control"><br>
             <input type="text" ng-model="infoform.hostelry_description" class="form-control"><br>
+            <input type="text" ng-model="infoform.hostelry_address" class="form-control"><br>
             <input type="text" ng-model="infoform.hostelry_username" class="form-control"><br>
             <input type="text" ng-model="infoform.hostelry_password" class="form-control"><br>
             <button class="btn btn-primary btn-md center-block" ng-click="updateinfo()">Save</button>
           </div>
-        </div>
+        </div><br><br>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Room ID</th>
+                <th>Room Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="i in roomtable">
+                <td>{{i.room_id}}</td>
+                <td>{{i.room_name}}</td>
+                <td><button class="btn btn-primary btn-md" data-toggle="modal" data-target="#photomodalroom" ng-click="roomphotomodal(i.room_id)">Photos</button></td>
+              </tr>
+              </tr>
+            </tbody>
+          </table>
+
+
+          <!-- Modal -->
+          <div id="photomodalroom" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">{{roomName}}</h4>
+                </div>
+                <div class="modal-body">
+                  <input type="file" file-model="myFileprof"/><br>
+                  <button ng-click="uploadroomphoto()" class="btn btn-primary btn-sm">Upload</button><br><br>
+                  <br><br><br>
+                  <div class="panel panel-default" ng-repeat="q in roomphotos">
+                    <div class="panel-body">
+                      <img ng-src="./upload/{{q.photolink}}" style="height: 250px;" /><br><br>
+                      <button class="btn btn-danger btn-block btn-md" type="button">Delete</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
 
       </div>
     </div>

@@ -783,6 +783,51 @@ var application = angular.module('App', ['ui.router', 'ui.bootstrap', 'chart.js'
 				});
 			}
 
+			$scope.rlabel = [];
+			$scope.rdata = [];
+			$scope.roption = {
+				scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    }
+                };
+
+			$http({
+					method: 'GET',
+					url: './services/reservestatus.php',
+				}).then(function(response) {
+					for(var i=0; i < response.data.length; i++) {
+						$scope.rlabel.push(response.data[i].reservation_status);
+						$scope.rdata.push(response.data[i].rescount);
+					}
+					console.log($scope.rlabel);
+				});
+
+			$scope.rslabel = [];
+			$scope.rsdata = [];
+			$scope.rsoption = {
+				scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    }
+                };
+
+			$http({
+					method: 'GET',
+					url: './services/roomreservationscount.php',
+				}).then(function(response) {
+					for(var i=0; i < response.data.length; i++) {
+						$scope.rslabel.push(response.data[i].room_name);
+						$scope.rsdata.push(response.data[i].rescount);
+					}
+				});
+
 
 
 	}]);
@@ -793,6 +838,9 @@ var application = angular.module('App', ['ui.router', 'ui.bootstrap', 'chart.js'
 
 		$scope.pageSize = 10;
 		$scope.currentPage = 1;
+
+		$scope.pageSizer = 10;
+		$scope.currentPager = 1;
 
 		$http({
 				method: 'GET',
@@ -869,6 +917,8 @@ var application = angular.module('App', ['ui.router', 'ui.bootstrap', 'chart.js'
 			$scope.selecthostelryname = "";
 			$scope.roomidreserve = "";
 
+			$scope.roomidreserve = [];
+
 			$scope.selecthostelryroom = function(roomnid, roomname, roomnumber) {
 				$scope.reservebuttoncancel = false;
 				$scope.roomidreserve = roomnid;
@@ -876,6 +926,16 @@ var application = angular.module('App', ['ui.router', 'ui.bootstrap', 'chart.js'
 				$scope.selectedroomshow = false;
 				$scope.selecthostelryname = roomname;
 				$scope.roomnumber = roomnumber;
+
+				$http({
+						method: 'POST',
+						url: './services/getroomphotos.php',
+						data: {'roomid': roomnid}
+					}).then(function(response) {
+						$scope.roomphotosuser = response.data;
+						console.log("qweqweqeqeqweqeqweqwe");
+						console.log($scope.roomphotosuser);
+					});
 			}
 
 			$scope.cancelbutton = function() {
@@ -1268,17 +1328,54 @@ application.filter('startFrom', function() {
 					$location.path('/hostelryprofile');
 				}
 			});
+			2
+			$scope.roomtable = [];
+
+			$http({
+				method: 'GET',
+				url: './services/tablerooms.php',
+			}).then(function(response) {
+				$scope.roomtable = response.data;
+				console.log(response);
+			});
+
+			$scope.name = "sample";
 
 			$scope.uploadFile = function(){
-	        var file = $scope.myFile;
-	        console.log('file is ' );
-	        console.dir(file);
+		        var file = $scope.myFile;
+		        console.log('file is ' );
+		        console.dir(file);
 
-	        var uploadUrl = "./services/savephotohostelry.php";
-	        var text = $scope.name;
-	        fileUpload.uploadFileToUrl(file, uploadUrl);
-	        
-	    }
+		        var uploadUrl = "./services/savephotohostelry.php";
+		        var text = $scope.name;
+		        fileUpload.uploadFileToUrl(file, uploadUrl, text);
+		        
+		    }
+
+		    $scope.roomName = "";
+		    $scope.roomphotos = [];
+
+		    $scope.roomphotomodal = function(roomid) {
+		    	$scope.roomName = roomid;
+		    	$http({
+					method: 'POST',
+					url: './services/getroomphotos.php',
+					data: {'roomid': roomid}
+				}).then(function(response) {
+					$scope.roomphotos = response.data;
+				});
+		    }
+
+		    $scope.uploadroomphoto = function() {
+
+		          var filer = $scope.myFileprof;
+		        console.log('file is ' );
+		        console.dir(filer);
+
+		        var uploadUrlr = "./services/saveroomphoto.php";
+		        var text = $scope.roomName;
+		        fileUpload.uploadFileToUrl(filer, uploadUrlr, text);
+		    }
 
 	    $scope.photoform = {};
 
@@ -1344,9 +1441,10 @@ application.filter('startFrom', function() {
 }]);
 
 application.service('fileUpload', ['$http', function ($http) {
-    this.uploadFileToUrl = function(file, uploadUrl){
+    this.uploadFileToUrl = function(file, uploadUrl, roomid){
          var fd = new FormData();
          fd.append('file', file);
+         fd.append('roomid', roomid);
          $http.post(uploadUrl, fd, {
              transformRequest: angular.identity,
              headers: {'Content-Type': undefined,'Process-Data': false}
@@ -1354,7 +1452,7 @@ application.service('fileUpload', ['$http', function ($http) {
          	console.log(response);
          	location.reload();
          });
-     }
+     };
  }]);
 
 

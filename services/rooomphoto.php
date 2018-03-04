@@ -23,6 +23,8 @@
      print_r($_FILES);
      $target_file = $target_dir . $_FILES["file"]["name"];
 
+     $roomid = $_POST['roomid'];
+
      move_uploaded_file($_FILES["file"]["tmp_name"], $target_file);
 
      //write code for saving to database 
@@ -30,15 +32,12 @@
 
      $photoid = "photo-" . rand(1, 10000) . "-" . date("m-d-Y");
 
-     session_start();
-     $hostelry = $_SESSION['hostelrylogin'];
-
-     $hostelrycheck = mysqli_query($conn, "SELECT * FROM photos WHERE userid='$hostelry'");
+     $hostelrycheck = mysqli_query($conn, "SELECT * FROM photos WHERE userid='$roomid'");
 
      if(mysqli_num_rows($hostelrycheck)) {
-        $updatephoto = mysqli_query($conn, "UPDATE photos SET photolink='".$_FILES["file"]["name"]."' WHERE userid='$hostelry'");
+        $updatephoto = mysqli_query($conn, "UPDATE photos SET photolink='".$_FILES["file"]["name"]."' WHERE userid='$roomid'");
      }else {
-        $sql = "INSERT INTO photos VALUES ('$photoid', '$hostelry','".$_FILES["file"]["name"]."', 'profile')";
+        $sql = "INSERT INTO photos VALUES ('$photoid', '$roomid','".$_FILES["file"]["name"]."', 'roomprofile')";
 
          if ($conn->query($sql) === TRUE) {
              echo json_encode($_FILES["file"]); // new file uploaded

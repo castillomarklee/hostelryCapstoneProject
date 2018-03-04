@@ -7,12 +7,13 @@
 	$name = $hostelry->hostelry_name;
 	$type = $hostelry->hostelry_type;
 	$description = $hostelry->hostelry_description;
+	$address = $hostelry->hostelry_address;
 	$username = $hostelry->hostelry_username;
 	$password = $hostelry->hostelry_password;
 
 	session_start();
 	$id = $_SESSION['hostelrylogin'];
 
-	$query = mysqli_query($conn, "UPDATE hostelryacc SET hostelry_name='$name', hostelry_type='$type', hostelry_description='$description', hostelry_username='$username', hostelry_password='$password' WHERE hostelry_id='$id'");
+	$query = mysqli_query($conn, "UPDATE hostelryacc SET hostelry_name='$name', hostelry_type='$type', hostelry_description='$description', hostelry_address='$address', hostelry_username='$username', hostelry_password='$password' WHERE hostelry_id='$id'");
 
  ?>
