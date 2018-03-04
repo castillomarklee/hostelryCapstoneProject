@@ -20,23 +20,60 @@
           <li><a href="#!userhostelry">Hostelries</a></li>
           <li><a href="#!compare">Compare</a></li>
         </ul>
-          <form class="navbar-form navbar-left">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search">
-        <div class="input-group-btn">
-          <button class="btn btn-default" type="submit">
-            <i class="glyphicon glyphicon-search"></i>
-          </button>
-        </div>
-      </div>
-    </form>
         <ul class="nav navbar-nav navbar-right">
           <li><a style="cursor: pointer;" data-target="#roomsreservedmodal" ng-click="viewreservedrooms()" data-toggle="modal"><i class="fa fa-key fa-1x" style="padding-left: 33px;" aria-hidden="true"></i> Rooms Reserved</a></li>
-          <li><a href="#!signup"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
           <li><a style="cursor: pointer;" id="loguoutaccount" ng-click="logoutfunction()"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
         </ul>
       </div>
     </nav>
+
+       <!-- Modal -->
+  <div id="roomsreservedmodal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+      
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Rooms Reserved</h4>
+        </div>
+        <div class="modal-body">
+
+            <ul uib-pagination total-items="userviewreservedrooms.length" ng-model="currentPagec" ng-change="pageSizec"></ul><br>
+
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Reservation ID</th>
+                  <th>Room Name</th>
+                  <th>Reservation Code</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="i in userviewreservedrooms | startFrom:(currentPagec - 1) * pageSizec | limitTo:pageSizec">
+                  <td>{{i.reservation_id}}</td>
+                  <td>{{i.room_name}}</td>
+                  <td>{{i.reservation_code}}</td>
+                  <td><button class="btn btn-primary btn-md" ng-click="cancenreserve(i.reservation_id)">Cancel</button></td>
+                  <td><button class="btn btn-success btn-md" data-toggle="collapse" data-target="#printshow" ng-click="code(i.reservation_code, i.room_name)">Print</button></td>
+                </tr>
+              </tbody>
+            </table>
+            <div id="printshow" class="collapse">
+                <div class="codeprint">
+                    <h1 style="font-size: 15px; font-family: arial;">{{roomnamelabel}}: {{codelabel}}</h1>
+                </div>
+                <br>
+                <button class="btn btn-md btn-primary" type="button" id="printreservation">Print</button>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelbutton()">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
 
 
 
@@ -47,7 +84,7 @@
         <div class="intro-text">
           <div class="intro-lead-in">Welcome to our Website!</div>
           <div class="intro-heading text-uppercase">You can start by inquiring for the best and available hostelry.</div>
-          <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="!">Get Started!</a>
+          <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#!userhostelry">Get Started!</a>
         </div>
       </div>
     </header>
@@ -64,7 +101,7 @@
         <div class="row text-center">
           <div class="row" style="margin-left: 200px;">
     <div class="col-md-3" style="float: left;">
-      <div class="panel panel-danger" >
+     <!--  <div class="panel panel-danger" >
         <div class="panel-heading">Inquire</div>
         <div class="panel-body">
           <span class="fa-stack fa-4x">
@@ -73,12 +110,12 @@
             </span><br>
           <button class="btn btn-primary btn-block">Open</button>
         </div>
-    </div>
+    </div> -->
   </div>
 
   <div class="row" >
     <div class="col-md-3" style="float: left;">
-      <div class="panel panel-danger" >
+     <!--  <div class="panel panel-danger" >
         <div class="panel-heading">View Hostelries</div>
         <div class="panel-body">
           <span class="fa-stack fa-4x">
@@ -87,12 +124,12 @@
             </span>
           <button class="btn btn-primary btn-block" type="button" ng-click="userhostelryroute()">Open</button>
         </div>
-    </div>
+    </div> -->
   </div>
 
   <div class="row" >
     <div class="col-md-3" style="float: left;">
-      <div class="panel panel-danger" >
+<!--       <div class="panel panel-danger" >
         <div class="panel-heading">Reserve</div>
         <div class="panel-body">
             <span class="fa-stack fa-4x">
@@ -101,7 +138,7 @@
             </span>
           <button class="btn btn-primary btn-block">Open</button>
         </div>
-    </div>
+    </div> -->
   </div>
         </div>
       </div>

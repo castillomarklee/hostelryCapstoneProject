@@ -110,6 +110,11 @@ var application = angular.module('App', ['ui.router', 'ui.bootstrap', 'chart.js'
 	            url: '/hprint',
 	            templateUrl: './views/hprint.html',
 	            controller: 'hprintcontroller'
+	         })
+	         .state('cprint', {
+	            url: '/cprint',
+	            templateUrl: './views/cprint.html',
+	            controller: 'userhostelrycontroller'
 	         });
 
     }
@@ -184,6 +189,17 @@ var application = angular.module('App', ['ui.router', 'ui.bootstrap', 'chart.js'
 					$location.path('/customerHome');
 				}
 			});
+
+			$scope.viewreservedrooms = function() {
+				$http({
+					method: 'GET',
+					url: './services/viewreservedroomservice.php'
+				}).then(function(response) {
+					$scope.userviewreservedrooms = response.data;
+					console.log("Reserved Rooms");
+					console.log($scope.userviewreservedrooms);
+				});
+			}
 
 			$scope.logoutfunction = function() {
 				$http({
@@ -842,6 +858,9 @@ var application = angular.module('App', ['ui.router', 'ui.bootstrap', 'chart.js'
 		$scope.pageSizer = 10;
 		$scope.currentPager = 1;
 
+		$scope.pageSizec = 10;
+		$scope.currentPagec = 1;
+
 		$http({
 				method: 'GET',
 				url: './services/checkSession.php',
@@ -994,6 +1013,22 @@ var application = angular.module('App', ['ui.router', 'ui.bootstrap', 'chart.js'
 			$scope.closerooms = function() {
 				$scope.addressmap = "";
 			}
+
+			$scope.codelabel = "";
+			$scope.roomnamelabel = "";
+
+			$scope.code = function(codelabel, roomnamelabel) {
+				$scope.codelabel = codelabel;
+				$scope.roomnamelabel = roomnamelabel;
+			}
+
+			$('#printreservation').click(function(events) {
+				$('.codeprint').wordExport();
+			});
+
+			// $('#reservationbutton').click(function(events) {
+			// 	$('.reservationprint').wordExport();
+			// });
 
 			$scope.hostelrylist();
 			
@@ -1156,8 +1191,6 @@ application.filter('startFrom', function() {
 			$('.datepicker').datepicker({
 			    startDate: '-3d'
 			});
-
-			setInterval(function(){ $scope.reservationtable(); }, 5000);
 
 			$scope.reservationtable();
 

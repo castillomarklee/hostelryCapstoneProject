@@ -165,7 +165,7 @@
         </ul>
           <form class="navbar-form navbar-left">
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search">
+        <input type="text" class="form-control" ng-model="searchhostelry" placeholder="Search">
         <div class="input-group-btn">
           <button class="btn btn-default" type="submit">
             <i class="glyphicon glyphicon-search"></i>
@@ -175,7 +175,6 @@
     </form>
         <ul class="nav navbar-nav navbar-right">
           <li><a style="cursor: pointer;" data-target="#roomsreservedmodal" ng-click="viewreservedrooms()" data-toggle="modal"><i class="fa fa-key fa-1x" style="padding-left: 33px;" aria-hidden="true"></i> Rooms Reserved</a></li>
-          <li><a href="#!signup"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
           <li><a style="cursor: pointer;" id="loguoutaccount" ng-click="logoutfunction()"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
         </ul>
       </div>
@@ -310,21 +309,34 @@
           <h4 class="modal-title">Rooms Reserved</h4>
         </div>
         <div class="modal-body">
+
+            <ul uib-pagination total-items="userviewreservedrooms.length" ng-model="currentPagec" ng-change="pageSizec"></ul><br>
+
             <table class="table table-striped">
               <thead>
                 <tr>
                   <th>Reservation ID</th>
                   <th>Room Name</th>
+                  <th>Reservation Code</th>
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="i in userviewreservedrooms">
+                <tr ng-repeat="i in userviewreservedrooms | startFrom:(currentPagec - 1) * pageSizec | limitTo:pageSizec">
                   <td>{{i.reservation_id}}</td>
                   <td>{{i.room_name}}</td>
+                  <td>{{i.reservation_code}}</td>
                   <td><button class="btn btn-primary btn-md" ng-click="cancenreserve(i.reservation_id)">Cancel</button></td>
+                  <td><button class="btn btn-success btn-md" data-toggle="collapse" data-target="#printshow" ng-click="code(i.reservation_code, i.room_name)">Print</button></td>
                 </tr>
               </tbody>
             </table>
+            <div id="printshow" class="collapse">
+                <div class="codeprint">
+                    <h1 style="font-size: 15px; font-family: arial;">{{roomnamelabel}}: {{codelabel}}</h1>
+                </div>
+                <br>
+                <button class="btn btn-md btn-primary" type="button" id="printreservation">Print</button>
+            </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelbutton()">Close</button>
@@ -623,5 +635,8 @@
 
     <!-- Custom scripts for this template -->
     <script src="js/agency.min.js"></script>
+
+    <script type="text/javascript" src="./bower_components/file-saver/FileSaver.js"></script>
+    <script type="text/javascript" src="./js/jquery.wordexport.js"></script>
 
 </div>
