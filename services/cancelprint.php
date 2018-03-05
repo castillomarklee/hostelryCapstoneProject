@@ -13,7 +13,7 @@
 	echo "<html>";
 	echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">";
 	echo "<body>";
-	echo "<h1 style='text-align: center;'> Reserved Customers List</h1><br><br><br><br>";
+	echo "<h1 style='text-align: center;'> Cancelled Customers List</h1><br><br><br><br>";
 	while ($row = mysqli_fetch_assoc($query)) {
 		echo "<h5>Firstname: " . $row['firstname']. "</h5>";
 		echo "<h5>Middlename: " . $row['middlename']. "</h5>";

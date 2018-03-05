@@ -694,7 +694,7 @@ var application = angular.module('App', ['ui.router', 'ui.bootstrap', 'chart.js'
 					if(response.data.hostelryuserroomexist == true) {
 						$scope.hostelryuserformsuccess = "The room already exists.";
 					} else {
-						// location.reload();
+						location.reload();
 						console.log("THis is some data");
 						console.log(response);
 					}
@@ -1447,6 +1447,16 @@ application.filter('startFrom', function() {
 					method: 'POST',
 					url: './services/updateinfoservice.php',
 					data: $scope.infoform
+				}).then(function(response) {
+					location.reload();
+				});
+		}
+
+		$scope.deleteroomphotos = function(roomphotoid) {
+			$http({
+					method: 'POST',
+					url: './services/deleteroomphoto.php',
+					data: {'roomphotoid': roomphotoid}
 				}).then(function(response) {
 					location.reload();
 				});
