@@ -9,8 +9,10 @@
 
     <!-- Custom styles for this template -->
     <link href="./css/agency.min.css" rel="stylesheet">
+
+    
   
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6v5-2uaq_wusHDktM9ILcqIrlPtnZgEk&sensor=false">  
+    <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6v5-2uaq_wusHDktM9ILcqIrlPtnZgEk&sensor=false">  
     </script>  
   
   
@@ -150,7 +152,7 @@
                 return;  
             }  
         }  
-    </script>  
+    </script>   -->
 
     <!-- Navigation Bar -->
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -254,7 +256,7 @@
 	</div>
 
   <div id="viewmodal" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-md">
+    <div class="modal-dialog modal-lg" style="width: 1200px;">
       
       <!-- Modal content-->
       <div class="modal-content">
@@ -262,8 +264,40 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">View</h4>
         </div>
-        <div class="modal-body">
-            <form id="form1" runat="server">  
+        <div class="modal-body" style="overflow: hidden;">
+
+            <table border="0" cellpadding="0" cellspacing="3">
+        <tr>
+            <td colspan="10">
+                <input type="text" class="form-control" id="txtSource" placeholder="Location" style="width: 200px; float: left;" />
+                &nbsp;<input type="button" class="btn btn-md btn-primary" id="btnGetLocation" value="Current Location" style="float: left; margin-left: 10px;" />
+                &nbsp;
+                <input type="text" id="txtDestination" class="form-control" ng-disabled="true" value="{{addressmap}}" style="width: 200px; float: left; margin-left: 20px;" />
+                <input type="button" class="btn btn-md btn-success" value="Get Route" onclick="GetRoute()" style="float: left; margin-left: 10px;" /><br><br><br><br>
+                <h4>Current Location:</h4>
+                <textarea class="form-control" id="hfCurrentLocation" style="width: 500px; height: 100px;"></textarea>
+                <hr />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div id="dvDistance">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="dvMap" style="width: 600px; height: 500px">
+                </div>
+            </td>
+            <td>
+                <div id="dvPanel" style="width: 500px; height: 500px">
+                </div>
+            </td>
+        </tr>
+    </table>
+
+          <!--   <form id="form1" runat="server">  
     <table style="border: solid 15px blue; width: 100%; vertical-align: central;">  
         <tr>  
             <td style="padding-left: 20px; padding-top: 20px; padding-bottom: 20px; background-color: skyblue;  
@@ -288,7 +322,7 @@
             </td>  
         </tr>
         </table>  
-    </form>  
+    </form>   -->
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closerooms()">Close</button>
