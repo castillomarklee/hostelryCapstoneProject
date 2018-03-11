@@ -236,7 +236,15 @@
 				  <div ng-hide="selectedroomshow">
 				  	<h2 style="padding-top: 20px; font-size: 40px;">Selected:</h2>
 				  	<p style="padding-left: 30px; font-size: 30px;">Room number: {{roomnumber}}</p>
-				  	<p style="padding-left: 30px; font-size: 30px; padding-top: 1px;">Room name: {{selecthostelryname}}</p>
+				  	<p style="padding-left: 30px; font-size: 30px; padding-top: 1px;">Room name: {{selecthostelryname}}</p><br>
+
+                 <p class="input-group">
+                  <input type="text" class="form-control" uib-datepicker-popup ng-model="dt" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                  </span>
+                </p>
+
                     <br><br>
                     <ul uib-pagination total-items="roomphotosuser.length" ng-model="currentPager" ng-change="pageSizer"></ul><br>
                     <div ng-repeat="r in roomphotosuser | startFrom:(currentPage - 1) * pageSize | limitTo:pageSize">
@@ -244,7 +252,7 @@
                     </div>
 				  </div>
 				<button type="button" style="margin-left: 195px;" ng-disabled="reservebuttoncancel" class="btn btn-primary btn-lg" ng-click="cancelbutton()">Cancel</button>
-	        	<button type="button" ng-click="reserveroom()" ng-disabled="reservebuttoncancel" class="btn btn-success btn-lg">Reserve</button>
+	        	<button type="button" ng-click="reserveroom(dt)" ng-disabled="reservebuttoncancel" class="btn btn-success btn-lg">Reserve</button>
 	        </form>
 	      </div>
 	      <div class="modal-footer">
@@ -361,6 +369,7 @@
                   <th>Reservation ID</th>
                   <th>Room Name</th>
                   <th>Reservation Code</th>
+                  <th>Reservation Date</th>
                 </tr>
               </thead>
               <tbody>
@@ -368,6 +377,7 @@
                   <td>{{i.reservation_id}}</td>
                   <td>{{i.room_name}}</td>
                   <td>{{i.reservation_code}}</td>
+                  <td>{{i.room_reservation}}</td>
                   <td><button class="btn btn-primary btn-md" ng-click="cancenreserve(i.reservation_id)">Cancel</button></td>
                   <td><button class="btn btn-success btn-md" data-toggle="collapse" data-target="#printshow" ng-click="code(i.reservation_code, i.room_name)">Print</button></td>
                 </tr>

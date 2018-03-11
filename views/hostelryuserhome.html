@@ -67,11 +67,12 @@
                     <thead>
                       <tr>
                         <th>Reservation ID</th>
-                        <th>Reservation Date</th>
+                        <th>Date Created</th>
                         <th>Reservation Code</th>
                         <th>Reservation Status</th>
                         <th>Room</th>
                         <th>Customer</th>
+                        <th>Reservation Date</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -82,6 +83,7 @@
                         <td>{{i.reservation_status}}</td>
                         <td>{{i.room_name}}</td>
                         <td>{{i.firstname}} {{i.middlename}} {{i.lastname}}</td>
+                        <td>{{i.room_reservation}}</td>
                         <td><button type="button" class="btn btn-danger" ng-click="deletereservation(i.reservation_id)">Delete</button></td>
                       </tr>
                     </tbody>

@@ -5,6 +5,7 @@
 	$roomid = json_decode(file_get_contents("php://input"));
 
 	$id = $roomid->hostelryroomsid;
+	$reservationDate = $roomid->reservationDate;
 
 	$userid = "";
 
@@ -29,7 +30,7 @@
 	$reservationstatus = "reserved";
 	$roomstatus = "reserved";
 
-	$query = mysqli_query($conn, "INSERT INTO reservation VALUES('$reservationid', '$reservationdescription', '$reservationdate',  '$reservationcode', '$reservationstatus', '$id', '$usersession')");
+	$query = mysqli_query($conn, "INSERT INTO reservation VALUES('$reservationid', '$reservationdescription', '$reservationdate',  '$reservationcode', '$reservationstatus', '$id', '$usersession', '$reservationDate')");
 
 	$roomquery = mysqli_query($conn, "UPDATE rooms SET room_status='$roomstatus' WHERE room_id='$id'");
 
